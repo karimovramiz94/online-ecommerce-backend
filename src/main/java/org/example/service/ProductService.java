@@ -22,11 +22,30 @@ public class ProductService {
                 return productRepository.save(product);
     }
 
-    public void deleteProduct(Long id) {
-        productRepository.deleteById(id);
-    }
+
 
     public List<Product> getProductsByCategoryId(Long categoryId) {
         return productRepository.findByCategory_Id(categoryId);
     }
+
+
+
+    // Обновление товара
+    public Product updateProduct(Long id, Product productDetails) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+
+        product.setName(productDetails.getName());
+        product.setPrice(productDetails.getPrice());
+        // Можно обновить и другие поля, например категорию
+        return productRepository.save(product);
+    }
+
+    // Удаление товара
+    public void deleteProduct(Long id) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+        productRepository.delete(product);
+    }
+
 }

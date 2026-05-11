@@ -3,6 +3,7 @@ package org.example;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,7 +20,6 @@ public class Order {
     private Double totalAmount;
     private LocalDateTime orderDate;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "order_id")
-    private List<CartItem> orderItems; // Товары, которые превратились в заказ
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderItem> orderItems = new ArrayList<>(); // Товары, которые превратились в заказ
 }
